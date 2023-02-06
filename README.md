@@ -1,11 +1,8 @@
-# termux-chroot-ubuntu
-A guide to install chroot ubuntu on your Android devices
-
 ## Installation
 
 #### In Termux: Setting Up termux
 
-```
+```sh
 termux-setup-storage
 termux-change-repo
 
@@ -16,7 +13,7 @@ pkg install tsu pulseaudio wget nano
 
 #### In Termux: Install rootfs
 
-```
+```sh
 tsu
 mkdir /data/rootfs
 cd /data/rootfs
@@ -29,7 +26,7 @@ mkdir sdcard dev/shm
 
 From: https://github.com/ThieuMinh26/Proot-Setup/blob/main/Install_Script
 
-```
+```sh
 #!/data/data/com.termux/files/usr/bin/sh
 
 pulseaudio --start --exit-idle-time=-1
@@ -40,7 +37,7 @@ pacmd load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anony
 
 From https://github.com/ThieuMinh26/Proot-Setup/blob/main/Chroot/start.sh
 
-```
+```sh
 #!/data/data/com.termux/files/usr/bin/sudo sh
 
 # fix /data mount options
@@ -68,7 +65,7 @@ chroot ./chroot /bin/su - root
 
 From https://github.com/ThieuMinh26/Proot-Setup/blob/main/Chroot/stop.sh
 
-```
+```sh
 #!/data/data/com.termux/files/usr/bin/sudo sh
 
 umount ./chroot/dev/pts
@@ -81,7 +78,7 @@ umount ./chroot/sdcard
 
 #### In Termux: Start Ubuntu
 
-```
+```sh
 cd ../usr/bin
 chmod +x start stop pulse
 start
@@ -91,7 +88,7 @@ start
 
 From https://github.com/ThieuMinh26/Proot-Setup/blob/main/Chroot/Chroot-Termux
 
-```
+```sh
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 echo "127.0.0.1 localhost" > /etc/hosts
 
@@ -108,7 +105,7 @@ usermod -g 3003 _apt
 
 #### In Ubuntu: Add new user (replace `cortmiem`)
 
-```
+```sh
 apt update
 apt upgrade
 apt install nano sudo
@@ -119,7 +116,7 @@ echo "cortmiem ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/cortmiem
 
 #### In Ubuntu: Install desktop environment
 
-```
+```sh
 # 1.mate desktop and Gnome Flashback support HiDPI, look better on 2k tablet. 
 apt install ubuntu-mate-desktop # full
 apt install mate-desktop-environment-core
@@ -132,7 +129,7 @@ apt install icewm
 
 #### In Ubuntu: Install desktop environment
 
-```
+```sh
 # 1.mate desktop and Gnome Flashback support HiDPI, look better on 2k tablet. 
 apt install ubuntu-mate-desktop # full
 apt install mate-desktop-environment-core
@@ -145,14 +142,14 @@ apt install icewm
 
 #### In Ubuntu: Install Xorg and Pulseaudio
 
-```
+```sh
 apt install xorg tigervnc-standalone-server pulseaudio
 echo "export PULSE_SERVER=127.0.0.1" >> /etc/profile
 ```
 
 #### In Ubuntu: Configure VNC
 
-```
+```sh
 su - cortmiem
 # just type vncserver when use icewm with root.
 LD_PRELOAD=/lib/aarch64-linux-gnu/libgcc_s.so.1 vncserver -xstartup mate-session -geometry=2560x1600
@@ -160,13 +157,13 @@ LD_PRELOAD=/lib/aarch64-linux-gnu/libgcc_s.so.1 vncserver -xstartup mate-session
 
 #### In Ubuntu: Stop VNC
 
-```
+```sh
 # alias exit="vncserver -kill&exit"
 ```
 
 #### In Ubuntu: Box64 Wine64
 
-```
+```sh
 sudo apt install wget xz-utils sudo
 wget https://github.com/ThieuMinh26/Proot-Setup/raw/main/Box86-64_Wine86-64.sh
 sudo bash Box86-64_Wine86-64.sh
@@ -187,7 +184,7 @@ LANG=ja_JP box64 wine explorer
 
 #### In Ubuntu: Zink, check [here](https://github.com/ThieuMinh26/Proot-Setup/blob/main/Zink)
 
-```
+```sh
 ZINK: warning, this is *cpu-based conditional rendering*, say bye-bye to fps
 ```
 
@@ -195,7 +192,7 @@ shows on A13 Snapdragon 865+ and A13 Tensor G1. Help needed.
 
 #### In Ubuntu: Visual Studio Code
 
-```
+```sh
 sudo apt-get install wget gpg
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
