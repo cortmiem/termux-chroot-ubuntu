@@ -201,6 +201,27 @@ rm -f packages.microsoft.gpg
 ```
 
 #### In Ubuntu: Chromium
+
+Simple way: https://www.reddit.com/r/termux/comments/nys0no/chrome_in_termuxdesktop/
+
+```sh
+apt install -y gnupg2 gnupg gnupg1
+echo 'deb http://ftp.de.debian.org/debian bullseye main' > /etc/apt/sources.list.d/debian.list
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys DCC9EFBF77E11517
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 648ACFD622F3D138
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AA8E81B4331F7F50
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 112695A0E562B32A
+ 
+printf 'Package: *\nPin: release a=focal\nPin-Priority: 500\n\n\nPackage: *\nPin: origin "ftp.debian.org"\nPin-Priority: 300\n\n\nPackage: chromium*\nPin: origin "ftp.debian.org"\nPin-Priority: 700\n' >> /etc/apt/preferences.d/chromium.pref
+
+apt update
+apt install chromium
+ 
+rm /etc/apt/sources.list.d/debian.list
+rm /etc/apt/preferences.d/chromium.pref
+apt update
+```
+
 From [How to install Chromium without snap?](https://askubuntu.com/questions/1204571/how-to-install-chromium-without-snap)
 
 You can use Chromium from the Debian "buster" repository.
