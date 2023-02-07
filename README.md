@@ -200,3 +200,64 @@ sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packag
 rm -f packages.microsoft.gpg
 ```
 
+#### In Ubuntu: Chromium
+From [How to install Chromium without snap?](https://askubuntu.com/questions/1204571/how-to-install-chromium-without-snap)
+
+You can use Chromium from the Debian "buster" repository.
+For example, if your Ubuntu release is Eoan (19.10):
+
+1. Remove Ubuntu chromium packages:
+
+   ```sh
+   sudo apt remove chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg-extra
+   ```
+
+2. Add Debian "buster" repository. Create a file `/etc/apt/sources.list.d/debian.list` with the following content:
+
+   ```sh
+   deb [arch=amd64 signed-by=/usr/share/keyrings/debian-buster.gpg] http://deb.debian.org/debian buster main
+   deb [arch=amd64 signed-by=/usr/share/keyrings/debian-buster-updates.gpg] http://deb.debian.org/debian buster-updates main
+   deb [arch=amd64 signed-by=/usr/share/keyrings/debian-security-buster.gpg] http://deb.debian.org/debian-security buster/updates main
+   ```
+
+3. Add the Debian signing keys:
+
+   ```sh
+   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys DCC9EFBF77E11517
+   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 648ACFD622F3D138
+   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 112695A0E562B32A
+   ```
+
+4. Store GPG keys in `/usr/share/keyrings`
+
+   ```sh
+   sudo apt-key export 77E11517 | sudo gpg --dearmour -o /usr/share/keyrings/debian-buster.gpg
+   sudo apt-key export 22F3D138 | sudo gpg --dearmour -o /usr/share/keyrings/debian-buster-updates.gpg
+   sudo apt-key export E562B32A | sudo gpg --dearmour -o /usr/share/keyrings/debian-security-buster.gpg
+   ```
+
+5. Configure apt pinning. Create a file `/etc/apt/preferences.d/chromium.pref` with the following content:
+
+   ```sh
+   # Note: 2 blank lines are required between entries
+   Package: *
+   Pin: release a=eoan
+   Pin-Priority: 500
+   
+   Package: *
+   Pin: origin "deb.debian.org"
+   Pin-Priority: 300
+   
+   # Pattern includes 'chromium', 'chromium-browser' and similarly
+   # named dependencies:
+   Package: chromium*
+   Pin: origin "deb.debian.org"
+   Pin-Priority: 700
+   ```
+
+6. Install Chromium again
+
+   ```sh
+   sudo apt update
+   sudo apt install chromium
+   ```
