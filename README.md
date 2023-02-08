@@ -165,8 +165,8 @@ LD_PRELOAD=/lib/aarch64-linux-gnu/libgcc_s.so.1 vncserver -xstartup mate-session
 
 ```sh
 sudo apt install wget xz-utils sudo
-wget https://github.com/ThieuMinh26/Proot-Setup/raw/main/Box86-64_Wine86-64.sh
-sudo bash Box86-64_Wine86-64.sh
+# todo: wget https://github.com/ThieuMinh26/Proot-Setup/raw/main/Box86-64_Wine86-64.sh
+# todo: sudo bash Box86-64_Wine86-64.sh
 
 
 sudo apt install locales
@@ -176,6 +176,8 @@ sudo sh -c "echo 'zh_CN.UTF-8 UTF-8' >> /etc/locale.gen"
 
 # CJK users install font pack 
 # https://pan.baidu.com/s/1SWTe1Dj485FTJSdKqI6QCA?pwd=4abj
+# https://1drv.ms/u/s!AiAVZceokcQYqUcvCMYruJUzU2TO?e=uo1jK8
+# simsun
 # https://1drv.ms/u/s!AiAVZceokcQYqUbCX5CqixCy0udp?e=7e5OEm
 
 LANG=ja_JP box64 wine explorer
